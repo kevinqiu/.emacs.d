@@ -3,6 +3,10 @@
   '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
 
+(setq backup-directory-alist `(("." . "~/.saves")))
+(tool-bar-mode -1)
+(setq backup-by-copying t)
+(desktop-save-mode 1)
 (line-number-mode 1)
 (column-number-mode 1)  ; makes the column number show up
 (display-time)
@@ -21,8 +25,15 @@
 (guru-global-mode  +1)
 (setq guru-warn-only)
 
+;;Undo Tree
+(require 'undo-tree)
+(global-undo-tree-mode)
+
+
 ;;ido
 (require 'ido)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
 (ido-mode t)
 
 ;;Ruby
@@ -31,23 +42,32 @@
 (add-to-list 'auto-mode-alist
                '("\\(Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
 
+;;C# mode
+(autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
+(setq auto-mode-alist
+           (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
+
 
 ;; Typescript highlighting/autocomplete
 (require 'typescript)
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
-(require 'tss)
-;; Key binding
-(setq tss-popup-help-key "C-:")
-(setq tss-jump-to-definition-key "C->")
-;; Do setting recommemded configuration
-(tss-config-default)
+
+(when (eq system-type 'darwin)
+  (setq mac-command-key-is-meta t)
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-key-is-meta t)
+  (setq mac-option-modifier 'meta)
+
+)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default))))
+ '(custom-safe-themes (quote ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(magit-use-overlays nil)
+ '(show-trailing-whitespace t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

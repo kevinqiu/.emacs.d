@@ -1,0 +1,8 @@
+*~
+*#
+*.elc
+elpa/archives/**
+local.el
+ac-comphist.dat
+.emacs.desktop.lock
+.emacs.desktop
