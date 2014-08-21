@@ -2,6 +2,7 @@
 (add-to-list 'package-archives
   '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
+(setq package-enable-at-startup nil)
 
 (setq backup-directory-alist `(("." . "~/.saves")))
 (tool-bar-mode -1)
