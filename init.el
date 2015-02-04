@@ -23,9 +23,6 @@
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
-(guru-global-mode  +1)
-(setq guru-warn-only)
-
 ;;Undo Tree
 (require 'undo-tree)
 (global-undo-tree-mode)
@@ -36,6 +33,10 @@
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (ido-mode t)
+
+;;scala
+(require 'scala-mode2)
+(add-to-list 'auto-mode-alist '("\.scala" . scala-mode) '("\.sbt\'" . scala-mode) )
 
 ;;Ruby
 (add-to-list 'auto-mode-alist
