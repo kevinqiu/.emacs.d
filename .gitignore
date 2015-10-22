@@ -7,3 +7,4 @@ ac-comphist.dat
 .emacs.desktop.lock
 .emacs.desktop
 session*
+/auto-save-list/
