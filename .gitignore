@@ -6,3 +6,4 @@ local.el
 ac-comphist.dat
 .emacs.desktop.lock
 .emacs.desktop
+session*

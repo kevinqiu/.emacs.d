@@ -5,6 +5,8 @@
 (setq package-enable-at-startup nil)
 
 (setq backup-directory-alist `(("." . "~/.saves")))
+(setq auto-save-file-name-transforms `((".*" ,"~/.saves" t)))
+
 (tool-bar-mode -1)
 (setq backup-by-copying t)
 (desktop-save-mode 1)
@@ -18,6 +20,10 @@
 (desktop-save-mode 1)
 (global-auto-revert-mode 1)
 (setq-default indent-tabs-mode nil)
+(setq tab-width 2) ; or any other preferred value
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
+(setq css-indent-offset 2)
 (delete-selection-mode 1)
 (load-theme 'solarized-dark t)
 
@@ -43,16 +49,6 @@
                '("\\.\\(?:gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist
                '("\\(Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
-
-;;C# mode
-(autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
-(setq auto-mode-alist
-           (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
-
-
-;; Typescript highlighting/autocomplete
-(require 'typescript)
-(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 
 (when (eq system-type 'darwin)
   (setq mac-command-key-is-meta t)
