@@ -1,12 +1,14 @@
+;;package stuff
 (require 'package)
 (add-to-list 'package-archives
   '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
 (setq package-enable-at-startup nil)
+(setq use-package-always-ensure t)
 
+;;useful settings
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq auto-save-file-name-transforms `((".*" ,"~/.saves" t)))
-
 (tool-bar-mode -1)
 (setq backup-by-copying t)
 (desktop-save-mode 1)
@@ -25,26 +27,34 @@
 (defvaralias 'cperl-indent-level 'tab-width)
 (setq css-indent-offset 2)
 (delete-selection-mode 1)
+
+;;load theme
+(use-package solarized-theme)
 (load-theme 'solarized-dark t)
 
+;;flycheck
+(use-package flycheck)
+
+;;js
+(use-package js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 ;;Undo Tree
-(require 'undo-tree)
+(use-package undo-tree)
 (global-undo-tree-mode)
 
-
 ;;ido
-(require 'ido)
+(use-package ido)
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (ido-mode t)
 
 ;;scala
-(require 'scala-mode2)
+(use-package scala-mode2)
 (add-to-list 'auto-mode-alist '("\.scala" . scala-mode) '("\.sbt\'" . scala-mode) )
 
 ;;Ruby
+(use-package ruby-mode)
 (add-to-list 'auto-mode-alist
                '("\\.\\(?:gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist
