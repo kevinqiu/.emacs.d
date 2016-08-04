@@ -28,6 +28,12 @@
 (setq css-indent-offset 2)
 (delete-selection-mode 1)
 
+;;various package declarations
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents) (package-install 'use-package))
+(use-package magit)
+(use-package multiple-cursors)
+
 ;;load theme
 (use-package solarized-theme)
 (load-theme 'solarized-dark t)
@@ -50,8 +56,8 @@
 (ido-mode t)
 
 ;;scala
-(use-package scala-mode2)
-(add-to-list 'auto-mode-alist '("\.scala" . scala-mode) '("\.sbt\'" . scala-mode) )
+;(use-package scala-mode2)
+;(add-to-list 'auto-mode-alist '("\.scala" . scala-mode) '("\.sbt\'" . scala-mode) )
 
 ;;Ruby
 (use-package ruby-mode)
