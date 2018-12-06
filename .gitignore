@@ -8,3 +8,6 @@ ac-comphist.dat
 .emacs.desktop
 session*
 /auto-save-list/
+anaconda-mode
+passwords.el
+ido.last
