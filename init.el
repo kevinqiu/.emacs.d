@@ -2,11 +2,8 @@
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 (setq package-enable-at-startup nil)
-(setq use-package-always-ensure t)
 
 ;;useful settings
 (setq backup-directory-alist `(("." . "~/.saves")))
@@ -33,6 +30,8 @@
 ;;various package declarations
 (unless (package-installed-p 'use-package)
   (package-refresh-contents) (package-install 'use-package))
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
 (use-package multiple-cursors)
 
 ;;magit
@@ -46,10 +45,21 @@
 ;;flycheck
 (use-package flycheck)
 
-;;js
+;;javascript/js
 (use-package rjsx-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
 (setq js2-include-node-externs t)
+(use-package add-node-modules-path)
+(use-package prettier-js)
+(use-package json-mode)
+(eval-after-load 'rjsx-mode
+  '(progn
+     (add-hook 'rjsx-mode-hook 'add-node-modules-path)
+     (add-hook 'rjsx-mode-hook 'prettier-js-mode)
+     (add-hook 'rjsx-mode-hook 'flycheck-mode)))
+(setq js2-basic-offset 2)
+(setq js2-mode-show-parse-errors nil)
+(setq js2-mode-show-strict-warnings nil)
 
 ;; python
 (use-package anaconda-mode)
@@ -80,7 +90,7 @@
 (autoload 'whitespace-mode  "whitespace" "Toggle whitespace visualization."        t)
 (global-whitespace-mode 1)
 
-
+(load (expand-file-name "config/lisp.el" user-emacs-directory))
 
 ;;scala
 ;;(use-package scala-mode2)
@@ -89,46 +99,32 @@
 
 
 ;;ocaml - tuareg
-(load "/Users/kevin/.opam/4.06.1/share/emacs/site-lisp/tuareg-site-file")
-(use-package exec-path-from-shell)
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
+;; (load "/Users/kevin/.opam/4.06.1/share/emacs/site-lisp/tuareg-site-file")
 
-;;ocaml - merlin
-(let ((opam-share (ignore-errors (car (process-lines "opam" "config" "var" "share")))))
-  (when (and opam-share (file-directory-p opam-share))
-    ;; Register Merlin
-    (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
-    (autoload 'merlin-mode "merlin" nil t nil)
-    ;; Automatically start it in OCaml buffers
-    (add-hook 'tuareg-mode-hook 'merlin-mode t)
-    (add-hook 'caml-mode-hook 'merlin-mode t)
-    ;; Use opam switch to lookup ocamlmerlin binary
-    (setq merlin-command 'opam)))
+;; ;;ocaml - merlin
+;; (let ((opam-share (ignore-errors (car (process-lines "opam" "config" "var" "share")))))
+;;   (when (and opam-share (file-directory-p opam-share))
+;;     ;; Register Merlin
+;;     (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
+;;     (autoload 'merlin-mode "merlin" nil t nil)
+;;     ;; Automatically start it in OCaml buffers
+;;     (add-hook 'tuareg-mode-hook 'merlin-mode t)
+;;     (add-hook 'caml-mode-hook 'merlin-mode t)
+;;     ;; Use opam switch to lookup ocamlmerlin binary
+;;     (setq merlin-command 'opam)))
 
-;;merlin keybindings
-(global-set-key (kbd "C-t") 'merlin-type-enclosing)
-(use-package ocp-indent)
+;; ;;merlin keybindings
+;; (global-set-key (kbd "C-t") 'merlin-type-enclosing)
+;; (use-package ocp-indent)
 
 ;;Ruby
-(use-package ruby-mode)
-(add-to-list 'auto-mode-alist '("\\.\\(?:gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\(Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
+;(use-package ruby-mode)
+;(add-to-list 'auto-mode-alist '("\\.\\(?:gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode))
+;(add-to-list 'auto-mode-alist '("\\(Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
 
 ;;auto-complete(company-mode)
 (use-package company)
 (add-hook 'after-init-hook 'global-company-mode)
-
-;;protobuf
-(use-package protobuf-mode)
-
-; Make company aware of merlin
-(with-eval-after-load 'company
- (add-to-list 'company-backends 'merlin-company-backend))
-; Enable company on merlin managed buffers
-(add-hook 'merlin-mode-hook 'company-mode)
-; Or enable it globally:
-; (add-hook 'after-init-hook 'global-company-mode)
 
 ;; yaml
 (use-package yaml-mode)
@@ -139,6 +135,42 @@
   (interactive)
   (erc :server "irc.freenode.net"
        :port 6667))
+
+;; go
+(use-package go-mode)
+(use-package go-guru)
+(use-package company-go)
+(use-package go-eldoc)
+(global-set-key (kbd "C-.") 'godef-jump)
+(add-hook 'before-save-hook 'gofmt-before-save)
+(add-hook 'go-mode-hook 'flycheck-mode)
+(add-hook 'go-mode-hook 'go-eldoc-setup)
+(add-hook 'go-mode-hook
+          (lambda ()
+            (set (make-local-variable 'company-backends) '(company-go))
+;            (whitespace-toggle-options '(tabs))
+            (setq whitespace-style '(face spaces trailing lines
+                                     space-before-tab newline
+                                     indentation empty space-after-tab
+                                     space-mark tab-mark
+                                     newline-mark))
+            (setq tab-width 4)))
+
+(use-package exec-path-from-shell)
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-env "GOPATH"))
+
+;; protofbuf
+(use-package protobuf-mode)
+(add-to-list 'auto-mode-alist '("\\.proto\\'" . protobuf-mode))
+(defconst my-protobuf-style
+  '((c-basic-offset . 4)
+    (indent-tabs-mode . nil)))
+
+(add-hook 'protobuf-mode-hook
+          (lambda () (c-add-style "my-style" my-protobuf-style t)))
+
 
 (global-set-key "\C-ci"  'irc)
 
@@ -156,8 +188,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(custom-safe-themes
+   (quote
+    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(magit-use-overlays nil)
+ '(package-selected-packages
+   (quote
+    (prettier-js go-eldoc company-go go-guru go-mode company yaml-mode use-package undo-tree solarized-theme rjsx-mode projectile multiple-cursors magit ivy flycheck anaconda-mode)))
  '(show-trailing-whitespace t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

@@ -11,3 +11,5 @@ session*
 anaconda-mode
 passwords.el
 ido.last
+transient/
+network-security.data
