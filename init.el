@@ -12,7 +12,7 @@
 (setq backup-by-copying t)
 (desktop-save-mode 1)
 (line-number-mode 1)
-(column-number-mode 1)  ; makes the column number show up
+(column-number-mode 1)  ;make the column number show up
 (display-time)
 (show-paren-mode 1)
 (when (fboundp 'windmove-default-keybindings)
@@ -23,9 +23,7 @@
 (setq tab-width 2) ; or any other preferred value
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'cperl-indent-level 'tab-width)
-(setq css-indent-offset 2)
 (delete-selection-mode 1)
-
 
 ;;various package declarations
 (unless (package-installed-p 'use-package)
@@ -44,26 +42,6 @@
 
 ;;flycheck
 (use-package flycheck)
-
-;;javascript/js
-(use-package rjsx-mode)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-(setq js2-include-node-externs t)
-(use-package add-node-modules-path)
-(use-package prettier-js)
-(use-package json-mode)
-(eval-after-load 'rjsx-mode
-  '(progn
-     (add-hook 'rjsx-mode-hook 'add-node-modules-path)
-     (add-hook 'rjsx-mode-hook 'prettier-js-mode)
-     (add-hook 'rjsx-mode-hook 'flycheck-mode)))
-(setq js2-basic-offset 2)
-(setq js2-mode-show-parse-errors nil)
-(setq js2-mode-show-strict-warnings nil)
-
-;; python
-(use-package anaconda-mode)
-(add-hook 'python-mode-hook 'anaconda-mode)
 
 ;;Undo Tree
 (use-package undo-tree)
@@ -84,50 +62,14 @@
 ; Let projectile use ivy
 (setq projectile-completion-system 'ivy)
 
-
 ;;whitespace
 (require 'whitespace)
-(autoload 'whitespace-mode  "whitespace" "Toggle whitespace visualization."        t)
+(autoload 'whitespace-mode "whitespace" "Toggle whitespace visualization." t)
 (global-whitespace-mode 1)
-
-(load (expand-file-name "config/lisp.el" user-emacs-directory))
-
-;;scala
-;;(use-package scala-mode2)
-;;(add-to-list 'auto-mode-alist '("\.scala" . scala-mode)
-;;'("\.sbt\'" . scala-mode) )
-
-
-;;ocaml - tuareg
-;; (load "/Users/kevin/.opam/4.06.1/share/emacs/site-lisp/tuareg-site-file")
-
-;; ;;ocaml - merlin
-;; (let ((opam-share (ignore-errors (car (process-lines "opam" "config" "var" "share")))))
-;;   (when (and opam-share (file-directory-p opam-share))
-;;     ;; Register Merlin
-;;     (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
-;;     (autoload 'merlin-mode "merlin" nil t nil)
-;;     ;; Automatically start it in OCaml buffers
-;;     (add-hook 'tuareg-mode-hook 'merlin-mode t)
-;;     (add-hook 'caml-mode-hook 'merlin-mode t)
-;;     ;; Use opam switch to lookup ocamlmerlin binary
-;;     (setq merlin-command 'opam)))
-
-;; ;;merlin keybindings
-;; (global-set-key (kbd "C-t") 'merlin-type-enclosing)
-;; (use-package ocp-indent)
-
-;;Ruby
-;(use-package ruby-mode)
-;(add-to-list 'auto-mode-alist '("\\.\\(?:gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode))
-;(add-to-list 'auto-mode-alist '("\\(Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
 
 ;;auto-complete(company-mode)
 (use-package company)
 (add-hook 'after-init-hook 'global-company-mode)
-
-;; yaml
-(use-package yaml-mode)
 
 ;; freenode irc
 (defun irc ()
@@ -136,44 +78,7 @@
   (erc :server "irc.freenode.net"
        :port 6667))
 
-;; go
-(use-package go-mode)
-(use-package go-guru)
-(use-package company-go)
-(use-package go-eldoc)
-(global-set-key (kbd "C-.") 'godef-jump)
-(add-hook 'before-save-hook 'gofmt-before-save)
-(add-hook 'go-mode-hook 'flycheck-mode)
-(add-hook 'go-mode-hook 'go-eldoc-setup)
-(add-hook 'go-mode-hook
-          (lambda ()
-            (set (make-local-variable 'company-backends) '(company-go))
-;            (whitespace-toggle-options '(tabs))
-            (setq whitespace-style '(face spaces trailing lines
-                                     space-before-tab newline
-                                     indentation empty space-after-tab
-                                     space-mark tab-mark
-                                     newline-mark))
-            (setq tab-width 4)))
-
-(use-package exec-path-from-shell)
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-env "GOPATH"))
-
-;; protofbuf
-(use-package protobuf-mode)
-(add-to-list 'auto-mode-alist '("\\.proto\\'" . protobuf-mode))
-(defconst my-protobuf-style
-  '((c-basic-offset . 4)
-    (indent-tabs-mode . nil)))
-
-(add-hook 'protobuf-mode-hook
-          (lambda () (c-add-style "my-style" my-protobuf-style t)))
-
-
 (global-set-key "\C-ci"  'irc)
-
 
 ;;mac settings
 (when (eq system-type 'darwin)
@@ -182,6 +87,18 @@
   (setq mac-option-key-is-meta t)
   (setq mac-option-modifier 'meta)
   )
+
+;; yaml
+(use-package yaml-mode)
+
+;;(load (expand-file-name "config/ocaml.el" user-emacs-directory))
+;;(load (expand-file-name "config/scala.el" user-emacs-directory))
+;;(load (expand-file-name "config/ruby.el" user-emacs-directory))
+(load (expand-file-name "config/javascript.el" user-emacs-directory))
+(load (expand-file-name "config/python.el" user-emacs-directory))
+(load (expand-file-name "config/lisp.el" user-emacs-directory))
+(load (expand-file-name "config/go.el" user-emacs-directory))
+(load (expand-file-name "config/protobuf.el" user-emacs-directory))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
