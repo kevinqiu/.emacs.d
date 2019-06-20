@@ -47,6 +47,10 @@
 (use-package undo-tree)
 (global-undo-tree-mode)
 
+;;TODO
+(use-package hl-todo)
+(setq global-hl-todo-mode 1)
+
 ;;ivy
 (use-package ivy)
 (ivy-mode 1)
@@ -111,7 +115,7 @@
  '(magit-use-overlays nil)
  '(package-selected-packages
    (quote
-    (prettier-js go-eldoc company-go go-guru go-mode company yaml-mode use-package undo-tree solarized-theme rjsx-mode projectile multiple-cursors magit ivy flycheck anaconda-mode)))
+    (hl-todo prettier-js go-eldoc company-go go-guru go-mode company yaml-mode use-package undo-tree solarized-theme rjsx-mode projectile multiple-cursors magit ivy flycheck anaconda-mode)))
  '(show-trailing-whitespace t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

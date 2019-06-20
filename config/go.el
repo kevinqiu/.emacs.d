@@ -11,7 +11,7 @@
           (lambda ()
             (set (make-local-variable 'company-backends) '(company-go))
 ;            (whitespace-toggle-options '(tabs))
-            (setq whitespace-style '(face spaces trailing lines
+            (setq whitespace-style '(face spaces trailing
                                      space-before-tab newline
                                      indentation empty space-after-tab
                                      space-mark tab-mark
