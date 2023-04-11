@@ -17,6 +17,8 @@
                                      space-mark tab-mark
                                      newline-mark))
             (setq tab-width 4)))
+(setq gofmt-command "goimports")
+(add-hook 'before-save-hook 'gofmt-before-save)
 
 (use-package exec-path-from-shell)
 (when (memq window-system '(mac ns))
