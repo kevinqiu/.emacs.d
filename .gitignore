@@ -2,6 +2,7 @@
 *#
 *.elc
 elpa/**
+straight/**
 local.el
 ac-comphist.dat
 .emacs.desktop.lock
@@ -13,3 +14,4 @@ passwords.el
 ido.last
 transient/
 network-security.data
+.DS_Store

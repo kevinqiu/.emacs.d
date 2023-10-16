@@ -1,10 +1,3 @@
-;;package stuff
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-(package-initialize)
-(setq package-enable-at-startup nil)
-
 ;;useful settings
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq auto-save-file-name-transforms `((".*" ,"~/.saves" t)))
@@ -25,12 +18,25 @@
 (defvaralias 'cperl-indent-level 'tab-width)
 (delete-selection-mode 1)
 
-;;various package declarations
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents) (package-install 'use-package))
+;;package stuff - straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+;;use package declarations
+(straight-use-package 'use-package)
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
-(use-package multiple-cursors)
+(setq straight-use-package-by-default t)
 
 ;;magit
 (use-package magit)
@@ -46,6 +52,7 @@
 ;;Undo Tree
 (use-package undo-tree)
 (global-undo-tree-mode)
+(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
 
 ;;TODO
 (use-package hl-todo)
@@ -104,6 +111,7 @@
 (load (expand-file-name "config/go.el" user-emacs-directory))
 (load (expand-file-name "config/protobuf.el" user-emacs-directory))
 (load (expand-file-name "config/magit.el" user-emacs-directory))
+(load (expand-file-name "config/copilot.el" user-emacs-directory))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
