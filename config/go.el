@@ -1,15 +1,11 @@
 ;; go
 (use-package go-mode)
-(use-package go-guru)
-(use-package company-go)
-(use-package go-eldoc)
+(add-hook 'go-mode-hook #'lsp-deferred)
 (global-set-key (kbd "C-.") 'godef-jump)
 (add-hook 'before-save-hook 'gofmt-before-save)
 (add-hook 'go-mode-hook 'flycheck-mode)
-(add-hook 'go-mode-hook 'go-eldoc-setup)
 (add-hook 'go-mode-hook
           (lambda ()
-            (set (make-local-variable 'company-backends) '(company-go))
 ;            (whitespace-toggle-options '(tabs))
             (setq whitespace-style '(face spaces trailing
                                      space-before-tab newline

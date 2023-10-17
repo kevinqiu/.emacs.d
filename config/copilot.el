@@ -2,6 +2,8 @@
 
 ;; dependency
 (use-package editorconfig)
+(use-package dash)
+(use-package s)
 
 (use-package copilot
   :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))

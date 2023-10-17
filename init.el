@@ -47,7 +47,8 @@
 (load-theme 'solarized-light t)
 
 ;;flycheck
-(use-package flycheck)
+(use-package flycheck
+  :init (global-flycheck-mode))
 
 ;;Undo Tree
 (use-package undo-tree)
@@ -81,6 +82,11 @@
 ;;auto-complete(company-mode)
 (use-package company)
 (add-hook 'after-init-hook 'global-company-mode)
+
+;;lsp
+(use-package lsp-mode)
+(use-package company-lsp)
+(setq lsp-file-watch-threshold 5000)
 
 ;; freenode irc
 (defun irc ()
