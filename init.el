@@ -53,6 +53,7 @@
 ;;Undo Tree
 (use-package undo-tree)
 (global-undo-tree-mode)
+(setq undo-tree-auto-save-history 0)
 (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
 
 ;;TODO
