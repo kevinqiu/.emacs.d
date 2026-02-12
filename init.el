@@ -4,13 +4,13 @@
 (tool-bar-mode -1)
 (setq backup-by-copying t)
 (desktop-save-mode 1)
-(line-number-mode 1)
 (column-number-mode 1)  ;make the column number show up
 (display-time)
 (show-paren-mode 1)
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
-(global-linum-mode 1)
+(global-display-line-numbers-mode 1)
+(display-line-numbers-mode 1)
 (global-auto-revert-mode 1)
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2) ; or any other preferred value
@@ -118,7 +118,7 @@
 (load (expand-file-name "config/go.el" user-emacs-directory))
 (load (expand-file-name "config/protobuf.el" user-emacs-directory))
 (load (expand-file-name "config/magit.el" user-emacs-directory))
-(load (expand-file-name "config/copilot.el" user-emacs-directory))
+;;(load (expand-file-name "config/copilot.el" user-emacs-directory))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
