@@ -14,5 +14,6 @@ passwords.el
 ido.last
 transient/
 network-security.data
+tree-sitter/
 .DS_Store
 .lsp-session-v1
