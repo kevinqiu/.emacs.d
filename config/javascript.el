@@ -19,6 +19,7 @@
              ("\\.ts\\'"  . typescript-ts-mode)
              ("\\.jsx\\'" . tsx-ts-mode)
              ("\\.json\\'" .  json-ts-mode)
+             ("\\.prisma\\'" . prisma-ts-mode)
              )
       :preface
       (defun os/setup-install-grammars ()
@@ -31,7 +32,8 @@
                    (json . ("https://github.com/tree-sitter/tree-sitter-json" "v0.20.2"))
                    (toml "https://github.com/tree-sitter/tree-sitter-toml")
                    (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "tsx/src"))
-                   (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "typescript/src"))))
+                   (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "typescript/src"))
+                   (prisma "https://github.com/victorhqc/tree-sitter-prisma")))
           (add-to-list 'treesit-language-source-alist grammar)
           ;; Only install `grammar' if we don't already have it
           ;; installed. However, if you want to *update* a grammar then
@@ -56,3 +58,7 @@
         (add-to-list 'major-mode-remap-alist mapping))
       :config
       (os/setup-install-grammars))
+
+;; (add-hook 'tsx-ts-mode #'lsp-deferred)
+;; (add-hook 'typescript-ts-mode #'lsp-deferred)
+;; (add-hook 'js-ts-mode #'lsp-deferred)
