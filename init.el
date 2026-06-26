@@ -78,6 +78,7 @@
 ;;whitespace
 (require 'whitespace)
 (autoload 'whitespace-mode "whitespace" "Toggle whitespace visualization." t)
+(setq whitespace-line-column 100)
 (global-whitespace-mode 1)
 
 ;;auto-complete(company-mode)
@@ -109,7 +110,7 @@
 ;; yaml
 (use-package yaml-mode)
 
-;;(load (expand-file-name "config/ocaml.el" user-emacs-directory))
+(load (expand-file-name "config/ocaml.el" user-emacs-directory))
 ;;(load (expand-file-name "config/scala.el" user-emacs-directory))
 ;;(load (expand-file-name "config/ruby.el" user-emacs-directory))
 (load (expand-file-name "config/javascript.el" user-emacs-directory))
@@ -126,15 +127,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("2b0fcc7cc9be4c09ec5c75405260a85e41691abb1ee28d29fcd5521e4fca575b"
-     "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4"
-     default))
+   '("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default))
  '(magit-use-overlays nil)
  '(package-selected-packages
-   '(hl-todo prettier-js go-eldoc company-go go-guru go-mode company
-             yaml-mode use-package undo-tree solarized-theme rjsx-mode
-             projectile multiple-cursors magit ivy flycheck
-             anaconda-mode))
+   '(hl-todo prettier-js go-eldoc company-go go-guru go-mode company yaml-mode use-package undo-tree solarized-theme rjsx-mode projectile multiple-cursors magit ivy flycheck anaconda-mode))
  '(show-trailing-whitespace t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

@@ -59,6 +59,6 @@
       :config
       (os/setup-install-grammars))
 
-;; (add-hook 'tsx-ts-mode #'lsp-deferred)
-;; (add-hook 'typescript-ts-mode #'lsp-deferred)
-;; (add-hook 'js-ts-mode #'lsp-deferred)
+(add-hook 'tsx-ts-mode #'lsp-deferred)
+(add-hook 'typescript-ts-mode #'lsp-deferred)
+(add-hook 'js-ts-mode #'lsp-deferred)
