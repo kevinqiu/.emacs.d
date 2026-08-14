@@ -110,7 +110,7 @@
 ;; yaml
 (use-package yaml-mode)
 
-(load (expand-file-name "config/ocaml.el" user-emacs-directory))
+;;(load (expand-file-name "config/ocaml.el" user-emacs-directory))
 ;;(load (expand-file-name "config/scala.el" user-emacs-directory))
 ;;(load (expand-file-name "config/ruby.el" user-emacs-directory))
 (load (expand-file-name "config/javascript.el" user-emacs-directory))
